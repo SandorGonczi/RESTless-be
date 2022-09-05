@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 
-const run = require("./crud-read");
+const run = require("./db/connection");
 
 app.get(["/"], (req, res) => {
   run().then((planets) => res.send({ planets }));
