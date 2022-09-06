@@ -1,20 +1,24 @@
 const request = require("supertest");
-const app = require("../App");
-const db = require("../db/connection");
-const seed = require('../db/seed/seed.js');
+const { app, server } = require("../App");
+const seed = require("../db/seed/seed.js");
+const client = require("../db/connection");
+
+afterEach(() => {
+  return client.close();
+});
 
 afterAll(() => {
-  return db.end();
+  return server.close();
 });
 
 beforeEach(() => {
   return seed();
 });
 
-describe("GET /exercises", () => {
+describe("GET api/exercises", () => {
   test("status:200, responds with an array of exercise objects", () => {
     return request(app)
-      .get("/exercises")
+      .get("/api/exercises")
       .expect(200)
       .then(({ body }) => {
         const exercises = body;
@@ -37,27 +41,27 @@ describe("GET /exercises", () => {
 });
 
 describe("/api/nothinghere", () => {
-    describe("GET", () => {
-        test("Status 404 - Not found", () => {
-            return request(app)
-            .get('/api/nothinghere')
-            .expect(404)
-            .then(({body}) => {
-                expect(body.msg).toBe('bad path!');
-            })
-        })
-    })
-})
+  describe("GET", () => {
+    test("Status 404 - Not found", () => {
+      return request(app)
+        .get("/api/nothinghere")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("bad path!");
+        });
+    });
+  });
+});
 
 describe("/api/errorhandling", () => {
   describe("GET", () => {
-      test("Status 404 - Not found", () => {
-          return request(app)
-          .get('/api/errorhandling')
-          .expect(404)
-          .then(({body}) => {
-              expect(body.msg).toBe("Not found!");
-          })
-      })
-  })
-})
+    test("Status 404 - Not found", () => {
+      return request(app)
+        .get("/api/errorhandling")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Not found!");
+        });
+    });
+  });
+});
