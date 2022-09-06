@@ -6,11 +6,11 @@ const port = process.env.PORT || 3000;
 
 app.get(["/api/exercises"], getExercises);
 
-app.get('/api/errorhandling',errorTest);
+app.get("/api/errorhandling", errorTest);
 
-app.all('*', (req,res) => {
-  res.status(404).send({msg:'bad path!'});
-})
+app.all("*", (req, res) => {
+  res.status(404).send({ msg: "bad path!" });
+});
 
 //ERROR PATH
 
@@ -20,13 +20,13 @@ app.use((err, req, res, next) => {
   } else next(err);
 });
 
-app.use((err,req,res) => {
-res.status(500).send({msg: "500 - Internal server error"});
-})
+app.use((err, req, res) => {
+  res.status(500).send({ msg: "500 - Internal server error" });
+});
 
 const server = app.listen(port, (err) => {
   if (err) throw err;
   //console.log(`RESTless back end app listening on port ${port}!`)
 });
 
-module.exports = {app, server};
+module.exports = { app, server };
