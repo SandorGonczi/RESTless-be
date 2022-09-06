@@ -1,18 +1,26 @@
+const { app, server } = require("../App");
+const seed = require("../db/seed/seed.js");
+const client = require("../db/connection");
 const request = require("supertest");
-const app = require("../App");
 const db = require("../db/connection");
 require("jest-sorted");
 
-///////////////////////////////////////////
+// afterEach(() => {
+//   return client.close();
+// });
 
-//EXERCISES tests
+afterAll(() => {
+  return server.close();
+});
 
-///////////////////////////////////////////
+beforeEach(() => {
+  return seed();
+});
 
-describe("GET /exercises", () => {
-  test("status:200, responds with an array of exercise objects with correct properties", () => {
+describe("GET api/exercises", () => {
+  test("status:200, responds with an array of exercise objects", () => {
     return request(app)
-      .get("/exercises")
+      .get("/api/exercises")
       .expect(200)
       .then(({ body }) => {
         const exercises = body;
@@ -34,10 +42,10 @@ describe("GET /exercises", () => {
   });
 });
 
-describe("GET /exercises (queries)", () => {
+describe("GET /api/exercises (queries)", () => {
   test("status:200, responds with an array of exercise objects with correct properties", () => {
     return request(app)
-      .get("/exercises?sort_by=name")
+      .get("/api/exercises?sort_by=name")
       .expect(200)
       .then(({ body }) => {
         const exercises = body;
@@ -60,7 +68,7 @@ describe("GET /exercises (queries)", () => {
 
   test("status:200, responds with array of exercise objects, sorted by specified column", () => {
     return request(app)
-      .get("/exercises?sort_by=_id")
+      .get("/api/exercises?sort_by=_id")
       .expect(200)
       .then(({ body }) => {
         const exercises = body;
@@ -83,7 +91,7 @@ describe("GET /exercises (queries)", () => {
 
   test("status:200, responds with array of exercise objects, sorted by name as default and in ascending order as default", () => {
     return request(app)
-      .get("/exercises")
+      .get("/api/exercises")
       .expect(200)
       .then(({ body }) => {
         const exercises = body;
@@ -106,7 +114,7 @@ describe("GET /exercises (queries)", () => {
 
   test("status:200, responds with array of exercise objects, with specified order", () => {
     return request(app)
-      .get("/exercises?order=DESC")
+      .get("/api/exercises?order=DESC")
       .expect(200)
       .then(({ body }) => {
         const exercises = body;
@@ -129,7 +137,7 @@ describe("GET /exercises (queries)", () => {
 
   test("status:200, responds with array of exercise objects, filtered by one specified value", () => {
     return request(app)
-      .get("/exercises?equipment=body%20weight")
+      .get("/api/exercises?equipment=body%20weight")
       .expect(200)
       .then(({ body }) => {
         const exercises = body;
@@ -148,7 +156,7 @@ describe("GET /exercises (queries)", () => {
 
   test("status:200, responds with array of exercise objects, filtered by multiple specified values", () => {
     return request(app)
-      .get("/exercises?equipment=body%20weight&body_part=chest")
+      .get("/api/exercises?equipment=body%20weight&body_part=chest")
       .expect(200)
       .then(({ body }) => {
         const exercises = body;
@@ -168,7 +176,7 @@ describe("GET /exercises (queries)", () => {
   test("status:200, responds with array of exercise objects, filtered by multiple specified values, and ordered by specified property", () => {
     return request(app)
       .get(
-        "/exercises?sort_by=target&order=DESC&equipment=body%20weight&body_part=chest"
+        "/api/exercises?sort_by=target&order=DESC&equipment=body%20weight&body_part=chest"
       )
       .expect(200)
       .then(({ body }) => {
@@ -188,7 +196,7 @@ describe("GET /exercises (queries)", () => {
 
   test("status:200, responds with single exercise object when passed id query", () => {
     return request(app)
-      .get("/exercises?id=1306")
+      .get("/api/exercises?id=1306")
       .expect(200)
       .then(({ body }) => {
         const exercise = body;
@@ -206,7 +214,7 @@ describe("GET /exercises (queries)", () => {
 
   test("status:400, gives correct error when query is invalid sort_by", () => {
     return request(app)
-      .get("/exercises?sort_by=fish")
+      .get("/api/exercises?sort_by=fish")
       .expect(400)
       .then((response) => {
         expect(response.body.msg).toBe("Bad Request");
@@ -214,7 +222,7 @@ describe("GET /exercises (queries)", () => {
   });
   test("status:400, gives correct error when query is invalid order", () => {
     return request(app)
-      .get("/exercises?order=fish")
+      .get("/api/exercises?order=fish")
       .expect(400)
       .then((response) => {
         expect(response.body.msg).toBe("Bad Request");
@@ -222,7 +230,7 @@ describe("GET /exercises (queries)", () => {
   });
   test("status:400, gives correct error when query is invalid filter", () => {
     return request(app)
-      .get("/exercises?fish=fish")
+      .get("/api/exercises?fish=fish")
       .expect(400)
       .then((response) => {
         expect(response.body.msg).toBe("Bad Request");
@@ -230,7 +238,7 @@ describe("GET /exercises (queries)", () => {
   });
   test("status:400, gives correct error when sort query is mis-spelled", () => {
     return request(app)
-      .get("/exercises?sortby=_id")
+      .get("/api/exercises?sortby=_id")
       .expect(400)
       .then((response) => {
         expect(response.body.msg).toBe("Bad Request");
@@ -238,7 +246,7 @@ describe("GET /exercises (queries)", () => {
   });
   test("status:400, gives correct error when order query is mis-spelled", () => {
     return request(app)
-      .get("/exercises?orde=ASC")
+      .get("/api/exercises?orde=ASC")
       .expect(400)
       .then((response) => {
         expect(response.body.msg).toBe("Bad Request");
@@ -246,10 +254,36 @@ describe("GET /exercises (queries)", () => {
   });
   test("status:400, gives correct error when filter query is mis-spelled", () => {
     return request(app)
-      .get("/exercises?trget=chest")
+      .get("/api/exercises?trget=chest")
       .expect(400)
       .then((response) => {
         expect(response.body.msg).toBe("Bad Request");
       });
+  });
+});
+
+describe("/api/nothinghere", () => {
+  describe("GET", () => {
+    test("Status 404 - Not found", () => {
+      return request(app)
+        .get("/api/nothinghere")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("bad path!");
+        });
+    });
+  });
+});
+
+describe("/api/errorhandling", () => {
+  describe("GET", () => {
+    test("Status 404 - Not found", () => {
+      return request(app)
+        .get("/api/errorhandling")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Not found!");
+        });
+    });
   });
 });
