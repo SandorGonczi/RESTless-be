@@ -287,3 +287,18 @@ describe("/api/errorhandling", () => {
     });
   });
 });
+
+describe.only("GET /users", () => {
+  test("status:200, responds with a user object", () => {
+    return request(app)
+      .get("/api/users?user_name=Justin&user_password=password1")
+      .expect(200)
+      .then(({ body }) => {
+        const { user } = body;
+        expect(user).toBeInstanceOf(Object);
+        expect(user.user_name).toEqual("Justin");
+        expect(user.user_password).toEqual("password1");
+        expect(user.workouts).toBeInstanceOf(Object);
+      });
+  });
+});
