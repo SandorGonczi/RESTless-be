@@ -4,7 +4,7 @@ const { getExercises } = require("./controllers/exercises.controller");
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get(["/exercises"], getExercises);
+app.get(["/api/exercises"], getExercises);
 
 app.get('/api/errorhandling',errorTest);
 
@@ -24,9 +24,9 @@ app.use((err,req,res) => {
 res.status(500).send({msg: "500 - Internal server error"});
 })
 
-app.listen(port, (err) => {
+const server = app.listen(port, (err) => {
   if (err) throw err;
   //console.log(`RESTless back end app listening on port ${port}!`)
 });
 
-module.exports = app;
+module.exports = {app, server};

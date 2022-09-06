@@ -1,20 +1,24 @@
 const request = require("supertest");
-const app = require("../App");
-const db = require("../db/connection");
+const {app, server} = require("../App");
 const seed = require('../db/seed/seed.js');
+const client = require('../db/connection')
+
+afterEach(() => {
+  return client.close();
+});
 
 afterAll(() => {
-  return db.end();
-});
+  return server.close();
+})
 
 beforeEach(() => {
   return seed();
 });
 
-describe("GET /exercises", () => {
+describe("GET api/exercises", () => {
   test("status:200, responds with an array of exercise objects", () => {
     return request(app)
-      .get("/exercises")
+      .get("/api/exercises")
       .expect(200)
       .then(({ body }) => {
         const exercises = body;
