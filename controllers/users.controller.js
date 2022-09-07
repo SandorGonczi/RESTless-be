@@ -1,6 +1,7 @@
 const {
   selectUserByUsernamePassword,
   selectUserById,
+  // updateUserById,
 } = require("../models/users.model");
 
 exports.getUserByUsernamePassword = (req, res, next) => {
@@ -25,6 +26,16 @@ exports.getUserByUsernamePassword = (req, res, next) => {
 exports.getUserById = (req, res, next) => {
   const userId = req.params.userid;
   selectUserById(userId)
+    .then((user) => {
+      res.status(200).send({ user: user });
+    })
+    .catch(next);
+};
+
+exports.patchUserById = (req, res, next) => {
+  const userId = req.params.userid;
+  const newWorkout = req.body.new_workout;
+  updateUserById(userId, newWorkout)
     .then((user) => {
       res.status(200).send({ user: user });
     })

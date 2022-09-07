@@ -39,4 +39,24 @@ async function selectUserById(userId) {
   }
 }
 
-module.exports = { selectUserByUsernamePassword, selectUserById };
+// async function updateUserById(userId, newWorkout) {
+//   try {
+//     await client.connect();
+
+//     const db = client.db("restless_test_db");
+//     const coll = db.collection("users");
+
+//     const filter = { user_id: userId };
+//     const updateDoc = { $set: { workouts: newWorkout } };
+//     const result = await coll.updateOne(filter, updateDoc);
+//     return result;
+//   } finally {
+//     await client.close();
+//   }
+// }
+
+module.exports = {
+  selectUserByUsernamePassword,
+  selectUserById,
+  // updateUserById,
+};
