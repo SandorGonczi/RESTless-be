@@ -2,7 +2,7 @@ const { app, server } = require("../App");
 const seed = require("../db/seed/seed.js");
 const client = require("../db/connection");
 const request = require("supertest");
-const db = require("../db/connection");
+// const db = require("../db/connection");
 require("jest-sorted");
 
 // afterEach(() => {
@@ -13,9 +13,9 @@ afterAll(() => {
   return server.close();
 });
 
-beforeEach(() => {
-  return seed();
-});
+// beforeEach(() => {
+//   return seed();
+// });
 
 describe("GET api/exercises", () => {
   test("status:200, responds with an array of exercise objects", () => {
@@ -288,7 +288,7 @@ describe("/api/errorhandling", () => {
   });
 });
 
-describe.only("GET /users", () => {
+describe("GET /users", () => {
   test("status:200, responds with a user object", () => {
     return request(app)
       .get("/api/users?user_name=Justin&user_password=password1")
@@ -299,6 +299,24 @@ describe.only("GET /users", () => {
         expect(user.user_name).toEqual("Justin");
         expect(user.user_password).toEqual("password1");
         expect(user.workouts).toBeInstanceOf(Object);
+      });
+  });
+
+  test("status:400, gives correct error when incorrect query is in the request", () => {
+    return request(app)
+      .get("/api/users?user_nam=Justin&user_password=password1")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad Request");
+      });
+  });
+
+  test("status:400, gives correct error when incorrect query is in the request", () => {
+    return request(app)
+      .get("/api/users?user_name=Justina&user_password=password1")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Wrong UserName / Password!");
       });
   });
 });
