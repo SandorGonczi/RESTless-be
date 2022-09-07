@@ -8,9 +8,9 @@ const {
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get(["/exercises"], getExercises);
+app.get("/exercises", getExercises);
 app.get("/api/users", getUserByUsernamePassword);
-app.get(["/api/exercises"], getExercises); // [] needed?
+app.get("/api/exercises", getExercises);
 app.get("/api/users/:userid", getUserById);
 
 app.get("/api/errorhandling", errorTest);

@@ -2,20 +2,23 @@ const { app, server } = require("../App");
 const seed = require("../db/seed/seed.js");
 const client = require("../db/connection");
 const request = require("supertest");
-const db = require("../db/connection");
 require("jest-sorted");
 
-// afterEach(() => {
-//   return client.close();
+// beforeAll(() => {
+//   return client.connect();
 // });
 
 afterAll(() => {
   return server.close();
 });
 
-beforeEach(() => {
-  return seed();
-});
+// beforeEach(() => {
+//   return seed();
+// });
+
+// afterEach(() => {
+//   return client.close();
+// });
 
 describe("GET api/exercises", () => {
   test("status:200, responds with an array of exercise objects", () => {
@@ -282,7 +285,6 @@ describe("/api/errorhandling", () => {
         .get("/api/errorhandling")
         .expect(404)
         .then(({ body }) => {
-          _name, user_password;
           expect(body.msg).toBe("Not found!");
         });
     });
@@ -304,13 +306,14 @@ describe("GET /users - username + password ", () => {
   });
 });
 
-describe.only("GET /users/:userid", () => {
+describe("GET /users/:userid", () => {
   test("status:200, responds with a user object", () => {
     return request(app)
       .get("/api/users/2")
       .expect(200)
       .then(({ body }) => {
         const { user } = body;
+        console.log(user);
         expect(user).toBeInstanceOf(Object);
         expect(user.user_name).toEqual("Lance");
         expect(user.user_password).toEqual("password2");

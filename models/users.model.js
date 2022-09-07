@@ -28,11 +28,12 @@ async function selectUserById(userId) {
     const coll = db.collection("users");
 
     const cursor = coll.find({
-      _id: [userId],
+      user_id: userId,
     });
     const output = [];
 
     await cursor.forEach((elem) => output.push(elem));
+    console.log(output);
     return output[0];
   } finally {
     await client.close();

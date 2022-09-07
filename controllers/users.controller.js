@@ -10,9 +10,8 @@ exports.getUserByUsernamePassword = (req, res, next) => {
       res.status(400).send({ msg: "Invalid Request!" });
     }
   }
-
   const { user_name, user_password } = req.query;
-  selectUser(user_name, user_password)
+  selectUserByUsernamePassword(user_name, user_password)
     .then((user) => {
       res.status(200).send({ user: user });
     })
@@ -21,8 +20,7 @@ exports.getUserByUsernamePassword = (req, res, next) => {
 
 exports.getUserById = (req, res, next) => {
   const userId = req.params.userid;
-  // const { user_name, user_password } = req.query;
-  selectUser(userId)
+  selectUserById(userId)
     .then((user) => {
       res.status(200).send({ user: user });
     })
