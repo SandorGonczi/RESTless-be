@@ -5,9 +5,11 @@ const {
 
 exports.getUserByUsernamePassword = (req, res, next) => {
   const validQueryKeys = ["user_name", "user_password"];
-  for (let key in req.query) {
-    if (!validQueryKeys.includes(key)) {
-      res.status(400).send({ msg: "Bad Request" });
+  if (Object.keys(req.query).length != 0) {
+    for (let key in req.query) {
+      if (!validQueryKeys.includes(key)) {
+        res.status(400).send({ msg: "Bad Request" });
+      }
     }
   }
   const userName = req.query.user_name;
@@ -24,8 +26,7 @@ exports.getUserById = (req, res, next) => {
   const userId = req.params.userid;
   selectUserById(userId)
     .then((user) => {
-      if (user) res.status(200).send({ user: user });
-      else res.status(400).send({ msg: "Wrong User Id" });
+      res.status(200).send({ user: user });
     })
     .catch(next);
 };
