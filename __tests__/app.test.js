@@ -287,9 +287,7 @@ describe("/api/errorhandling", () => {
   });
 });
 
-
 describe("GET /users - username + password ", () => {
-
   test("status:200, responds with a user object", () => {
     return request(app)
       .get("/api/users?user_name=Justin&user_password=password1")
@@ -329,7 +327,6 @@ describe("GET /users/:userid", () => {
       .expect(200)
       .then(({ body }) => {
         const { user } = body;
-        console.log(user);
         expect(user).toBeInstanceOf(Object);
         expect(user.user_name).toEqual("Lance");
         expect(user.user_password).toEqual("password2");
