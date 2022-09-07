@@ -10,10 +10,12 @@ exports.getUserByUsernamePassword = (req, res, next) => {
       res.status(400).send({ msg: "Bad Request" });
     }
   }
-  const { user_name, user_password } = req.query;
-  selectUserByUsernamePassword(user_name, user_password)
+  const userName = req.query.user_name;
+  const userPassword = req.query.user_password;
+  selectUserByUsernamePassword(userName, userPassword)
     .then((user) => {
-      res.status(200).send({ user: user });
+      if (user) res.status(200).send({ user: user });
+      else res.status(400).send({ msg: "Wrong UserName / Password!" });
     })
     .catch(next);
 };
@@ -23,7 +25,7 @@ exports.getUserById = (req, res, next) => {
   selectUserById(userId)
     .then((user) => {
       if (user) res.status(200).send({ user: user });
-      else res.status(400).send({ msg: "Wrong UserName / Password!" });
+      else res.status(400).send({ msg: "Wrong User Id" });
     })
     .catch(next);
 };

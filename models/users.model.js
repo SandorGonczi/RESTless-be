@@ -1,15 +1,15 @@
 const client = require("../db/connection");
 
-async function selectUserByUsernamePassword(user_name, user_password) {
+async function selectUserByUsernamePassword(userName, userPassword) {
   try {
     await client.connect();
-
+    console.log(userName, userPassword);
     const db = client.db("restless_test_db");
     const coll = db.collection("users");
 
     const cursor = coll.find({
-      user_name: user_name,
-      user_password: user_password,
+      user_name: [userName],
+      user_password: [userPassword],
     });
     const output = [];
 
@@ -34,7 +34,6 @@ async function selectUserById(userId) {
     const output = [];
 
     await cursor.forEach((elem) => output.push(elem));
-    console.log(output);
     return output[0];
   } finally {
     await client.close();
