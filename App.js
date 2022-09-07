@@ -7,6 +7,9 @@ const {
 } = require("./controllers/users.controller");
 const app = express();
 const port = process.env.PORT || 3000;
+const cors = require("cors");
+
+app.use(cors());
 
 app.get("/exercises", getExercises);
 app.get("/api/users", getUserByUsernamePassword);
