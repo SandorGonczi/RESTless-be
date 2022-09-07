@@ -14,6 +14,7 @@ async function selectUserByUsernamePassword(user_name, user_password) {
     const output = [];
 
     await cursor.forEach((elem) => output.push(elem));
+
     return output[0];
   } finally {
     await client.close();

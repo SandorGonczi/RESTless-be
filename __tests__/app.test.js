@@ -16,10 +16,6 @@ afterAll(() => {
 //   return seed();
 // });
 
-// afterEach(() => {
-//   return client.close();
-// });
-
 describe("GET api/exercises", () => {
   test("status:200, responds with an array of exercise objects", () => {
     return request(app)
@@ -291,7 +287,9 @@ describe("/api/errorhandling", () => {
   });
 });
 
+
 describe("GET /users - username + password ", () => {
+
   test("status:200, responds with a user object", () => {
     return request(app)
       .get("/api/users?user_name=Justin&user_password=password1")
@@ -302,6 +300,24 @@ describe("GET /users - username + password ", () => {
         expect(user.user_name).toEqual("Justin");
         expect(user.user_password).toEqual("password1");
         expect(user.workouts).toBeInstanceOf(Object);
+      });
+  });
+
+  test("status:400, gives correct error when incorrect query is in the request", () => {
+    return request(app)
+      .get("/api/users?user_nam=Justin&user_password=password1")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad Request");
+      });
+  });
+
+  test("status:400, gives correct error when incorrect query is in the request", () => {
+    return request(app)
+      .get("/api/users?user_name=Justina&user_password=password1")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Wrong UserName / Password!");
       });
   });
 });
