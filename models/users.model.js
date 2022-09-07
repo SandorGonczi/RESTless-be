@@ -34,7 +34,7 @@ async function selectUserById(userId) {
     const output = [];
 
     await cursor.forEach((elem) => output.push(elem));
-    console.log(output);
+
     return output[0];
   } finally {
     await client.close();
