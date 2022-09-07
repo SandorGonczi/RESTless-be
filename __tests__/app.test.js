@@ -282,13 +282,14 @@ describe("/api/errorhandling", () => {
         .get("/api/errorhandling")
         .expect(404)
         .then(({ body }) => {
+          _name, user_password;
           expect(body.msg).toBe("Not found!");
         });
     });
   });
 });
 
-describe.only("GET /users", () => {
+describe("GET /users - username + password ", () => {
   test("status:200, responds with a user object", () => {
     return request(app)
       .get("/api/users?user_name=Justin&user_password=password1")
@@ -298,6 +299,21 @@ describe.only("GET /users", () => {
         expect(user).toBeInstanceOf(Object);
         expect(user.user_name).toEqual("Justin");
         expect(user.user_password).toEqual("password1");
+        expect(user.workouts).toBeInstanceOf(Object);
+      });
+  });
+});
+
+describe.only("GET /users/:userid", () => {
+  test("status:200, responds with a user object", () => {
+    return request(app)
+      .get("/api/users/2")
+      .expect(200)
+      .then(({ body }) => {
+        const { user } = body;
+        expect(user).toBeInstanceOf(Object);
+        expect(user.user_name).toEqual("Lance");
+        expect(user.user_password).toEqual("password2");
         expect(user.workouts).toBeInstanceOf(Object);
       });
   });
