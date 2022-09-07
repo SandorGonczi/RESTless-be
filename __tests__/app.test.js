@@ -2,11 +2,10 @@ const { app, server } = require("../App");
 const seed = require("../db/seed/seed.js");
 const client = require("../db/connection");
 const request = require("supertest");
-// const db = require("../db/connection");
 require("jest-sorted");
 
-// afterEach(() => {
-//   return client.close();
+// beforeAll(() => {
+//   return client.connect();
 // });
 
 afterAll(() => {
@@ -288,7 +287,9 @@ describe("/api/errorhandling", () => {
   });
 });
 
-describe("GET /users", () => {
+
+describe("GET /users - username + password ", () => {
+
   test("status:200, responds with a user object", () => {
     return request(app)
       .get("/api/users?user_name=Justin&user_password=password1")
@@ -317,6 +318,22 @@ describe("GET /users", () => {
       .expect(400)
       .then((response) => {
         expect(response.body.msg).toBe("Wrong UserName / Password!");
+      });
+  });
+});
+
+describe("GET /users/:userid", () => {
+  test("status:200, responds with a user object", () => {
+    return request(app)
+      .get("/api/users/2")
+      .expect(200)
+      .then(({ body }) => {
+        const { user } = body;
+        console.log(user);
+        expect(user).toBeInstanceOf(Object);
+        expect(user.user_name).toEqual("Lance");
+        expect(user.user_password).toEqual("password2");
+        expect(user.workouts).toBeInstanceOf(Object);
       });
   });
 });
