@@ -3,7 +3,7 @@ name: Test and Deploy
 on:
   push:
     branches:
-      - BE-CICD-Integration
+      - main
 jobs:
   run-tests:
     runs-on: ubuntu-latest
