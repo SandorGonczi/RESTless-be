@@ -1,6 +1,7 @@
 const {
   selectUserByUsernamePassword,
   selectUserById,
+  insertNewUser,
 } = require("../models/users.model");
 
 exports.getUserByUsernamePassword = (req, res, next) => {
@@ -27,6 +28,17 @@ exports.getUserById = (req, res, next) => {
   selectUserById(userId)
     .then((user) => {
       res.status(200).send({ user: user });
+    })
+    .catch(next);
+};
+
+exports.postNewUser = (req, res, next) => {
+  const { user_name, user_password } = req.body;
+
+  insertNewUser(user_name, user_password)
+    .then((user) => {
+      console.log(user);
+      res.status(201).send({ _id: user._id });
     })
     .catch(next);
 };
