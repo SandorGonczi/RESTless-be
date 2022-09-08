@@ -5,6 +5,12 @@ const { getExercises } = require("./controllers/exercises.controller");
 const { getUserByUsernamePassword } = require("./controllers/users.controller");
 const { getWorkoutsByUsername } = require("./controllers/workouts.controller");
 const {
+  getUserByUsernamePassword,
+  getUserById,
+  postNewUser,
+
+} = require("./controllers/users.controller");
+const {
   getBodyParts,
   getEquipments,
   getTargets,
@@ -13,12 +19,16 @@ const {
 const app = express();
 const port = process.env.PORT || 3001;
 const cors = require("cors");
+
 app.use(express.json());
+
 app.use(cors());
 
 // Exercises calls
 app.get("/api/exercises", getExercises);
 app.get("/api/exercises", getExercises);
+
+app.post("/api/users", postNewUser);
 
 // Users calls
 app.get("/api/users", getUserByUsernamePassword);

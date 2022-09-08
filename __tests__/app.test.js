@@ -4,6 +4,7 @@ const seedWorkouts = require("../db/seed/seed-workouts.js");
 
 const client = require("../db/connection");
 const request = require("supertest");
+const { ServerDescriptionChangedEvent } = require("mongodb");
 require("jest-sorted");
 
 beforeAll(() => {
@@ -309,7 +310,51 @@ describe("GET /users - username + password ", () => {
   });
 });
 
-describe("GET api/bodyparts", () => {
+
+describe("POST /api/users", () => {
+  test("status:201 inserts a new user to the db and sends the user back to the client", () => {
+    return request(app)
+      .post("/api/users")
+      .send({
+        user_name: "Joey",
+        user_password: "password4",
+      })
+      .expect(201)
+      .then(({ body }) => {
+        console.log(body);
+        const { _id } = body;
+
+        expect(_id).toEqual(expect.any(String));
+      });
+  });
+
+  // test("POST:400 responds with an error message when provided wrong body", () => {
+  //   return request(app)
+  //     .post("/api/articles/1/comments")
+  //     .send({
+  //       wrong_key: "lurker",
+  //       body: "Rolling with the big boys, baby!",
+  //     })
+  //     .expect(400)
+  //     .then((response) => {
+  //       expect(response.body.msg).toBe("Invalid request!");
+  //     });
+  // });
+  // test("POST:400 responds with an error message when provided wrong body", () => {
+  //   return request(app)
+  //     .post("/api/articles/1/comments")
+  //     .send({
+  //       username: 12,
+  //       body: "Rolling with the big boys, baby!",
+  //     })
+  //     .expect(400)
+  //     .then((response) => {
+  //       expect(response.body.msg).toBe("Invalid request!");
+  //     });
+});
+
+
+describe.only("GET api/bodyparts", () => {
   test("status:200, responds with an array of bodyparts", () => {
     return request(app)
       .get("/api/bodyparts")
@@ -385,3 +430,4 @@ describe("GET api/target", () => {
 //       });
 //   });
 // });
+
