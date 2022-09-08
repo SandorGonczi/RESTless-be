@@ -4,7 +4,11 @@ const { getExercises } = require("./controllers/exercises.controller");
 const {
   getUserByUsernamePassword,
   getUserById,
+<<<<<<< HEAD
+  postNewUser,
+=======
   // patchUserById,
+>>>>>>> 275e994aaa7812df103480e93c5dd611db24651b
 } = require("./controllers/users.controller");
 const {
   getBodyParts,
@@ -15,13 +19,19 @@ const app = express();
 const port = process.env.PORT || 3000;
 const cors = require("cors");
 
+app.use(express.json());
+
 app.use(cors());
 
 app.get("/exercises", getExercises);
 app.get("/api/users", getUserByUsernamePassword);
 app.get("/api/exercises", getExercises);
 app.get("/api/users/:userid", getUserById);
+<<<<<<< HEAD
+app.post("/api/users", postNewUser);
+=======
 // app.patch("/api/users/:userid", patchUserById);
+>>>>>>> 275e994aaa7812df103480e93c5dd611db24651b
 
 app.get("/api/errorhandling", errorTest);
 
