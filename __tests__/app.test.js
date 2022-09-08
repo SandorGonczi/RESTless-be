@@ -1,15 +1,18 @@
 const { app, server } = require("../App");
-const seed = require("../db/seed/seed.js");
+const seedUsers = require("../db/seed/seed-users.js");
+const seedWorkouts = require("../db/seed/seed-workouts.js");
+
 const client = require("../db/connection");
 const request = require("supertest");
 require("jest-sorted");
 
-// beforeAll(() => {
-//   return client.connect();
-// });
+beforeAll(() => {
+  seedUsers();
+  seedWorkouts();
+});
 
 afterAll(() => {
-  return server.close();
+  return client.close();
 });
 
 // beforeEach(() => {
@@ -38,6 +41,19 @@ describe("GET api/exercises", () => {
           );
         });
       });
+  });
+});
+
+describe("/api/nothinghere", () => {
+  describe("GET", () => {
+    test("Status 404 - Not found", () => {
+      return request(app)
+        .get("/api/nothinghere")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("bad path!");
+        });
+    });
   });
 });
 
@@ -261,32 +277,6 @@ describe("GET /api/exercises (queries)", () => {
   });
 });
 
-describe("/api/nothinghere", () => {
-  describe("GET", () => {
-    test("Status 404 - Not found", () => {
-      return request(app)
-        .get("/api/nothinghere")
-        .expect(404)
-        .then(({ body }) => {
-          expect(body.msg).toBe("bad path!");
-        });
-    });
-  });
-});
-
-describe("/api/errorhandling", () => {
-  describe("GET", () => {
-    test("Status 404 - Not found", () => {
-      return request(app)
-        .get("/api/errorhandling")
-        .expect(404)
-        .then(({ body }) => {
-          expect(body.msg).toBe("Not found!");
-        });
-    });
-  });
-});
-
 describe("GET /users - username + password ", () => {
   test("status:200, responds with a user object", () => {
     return request(app)
@@ -297,7 +287,6 @@ describe("GET /users - username + password ", () => {
         expect(user).toBeInstanceOf(Object);
         expect(user.user_name).toEqual("Justin");
         expect(user.user_password).toEqual("password1");
-        expect(user.workouts).toBeInstanceOf(Object);
       });
   });
 
@@ -320,22 +309,7 @@ describe("GET /users - username + password ", () => {
   });
 });
 
-describe("GET /users/:userid", () => {
-  test("status:200, responds with a user object", () => {
-    return request(app)
-      .get("/api/users/2")
-      .expect(200)
-      .then(({ body }) => {
-        const { user } = body;
-        expect(user).toBeInstanceOf(Object);
-        expect(user.user_name).toEqual("Lance");
-        expect(user.user_password).toEqual("password2");
-        expect(user.workouts).toBeInstanceOf(Object);
-      });
-  });
-});
-
-describe.only("GET api/bodyparts", () => {
+describe("GET api/bodyparts", () => {
   test("status:200, responds with an array of bodyparts", () => {
     return request(app)
       .get("/api/bodyparts")
@@ -356,7 +330,7 @@ describe.only("GET api/bodyparts", () => {
   });
 });
 
-describe.only("GET api/equipment", () => {
+describe("GET api/equipment", () => {
   test("status:200, responds with an array of equipment", () => {
     return request(app)
       .get("/api/equipment")
@@ -377,7 +351,7 @@ describe.only("GET api/equipment", () => {
   });
 });
 
-describe.only("GET api/target", () => {
+describe("GET api/target", () => {
   test("status:200, responds with an array of bodyparts", () => {
     return request(app)
       .get("/api/target")
@@ -398,48 +372,16 @@ describe.only("GET api/target", () => {
   });
 });
 
-// describe.only("PATCH /users/:userid", () => {
-//   test("status:200, responds with a user object", () => {
-//     const newWorkout = {
-//       "test-workout": {
-//         date: ["09-10-2022", "10-11-2022"],
-//         rest_timer: "120",
-//         exercises: {
-//           1: {
-//             exercise_id: "0007",
-//             feedback: "",
-//             sets: {
-//               1: {
-//                 weight: [12, 12],
-//                 reps: [12, 12],
-//                 time: "null",
-//               },
-//               2: {
-//                 weight: [12, 12],
-//                 reps: [12, 12],
-//                 time: "null",
-//               },
-//               3: {
-//                 weight: [12, 12],
-//                 reps: [12, 12],
-//                 time: "null",
-//               },
-//             },
-//           },
-//         },
-//       },
-//     };
+// describe("GET /api/workouts/:username", () => {
+//   test("status:200, responds with array of workout objects", () => {
 //     return request(app)
-//       .patch("/api/users/2")
-//       .send(newWorkout)
+//       .get("/api/workouts/Justin")
 //       .expect(200)
 //       .then(({ body }) => {
-//         const { user } = body;
-//         console.log(user);
-//         expect(user).toBeInstanceOf(Object);
-//         expect(user.user_name).toEqual("Lance");
-//         expect(user.user_password).toEqual("password2");
-//         expect(user.workouts).toBeInstanceOf(Object);
+//         const { workouts } = body;
+//         // expect(user).toBeInstanceOf(Object);
+//         // expect(user.user_name).toEqual("Lance");
+//         // expect(user.user_password).toEqual("password2");
 //       });
 //   });
 // });

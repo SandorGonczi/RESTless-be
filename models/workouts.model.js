@@ -1,21 +1,20 @@
 const client = require("../db/connection");
 
-async function selectUserByUsernamePassword(userName, userPassword) {
+async function selectWorkoutsByUsername(userName) {
   await client.connect();
 
   const db = client.db("restless_test_db");
-  const coll = db.collection("users");
+  const coll = db.collection("workouts");
 
   const cursor = coll.find({
     user_name: userName,
-    user_password: userPassword,
   });
   const output = [];
 
   await cursor.forEach((elem) => output.push(elem));
-  return output[0];
+  return output;
 }
 
 module.exports = {
-  selectUserByUsernamePassword,
+  selectWorkoutsByUsername,
 };

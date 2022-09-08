@@ -29,47 +29,40 @@ async function selectExercises(
     return Promise.reject({ status: 400, msg: "Bad Request" });
   }
 
-  try {
-    await client.connect();
+  await client.connect();
 
-    const db = client.db("restless_test_db");
-    const coll = db.collection("exercises");
-    let cursor;
+  const db = client.db("restless_test_db");
+  const coll = db.collection("exercises");
+  let cursor;
 
-    // find code goes here
+  // find code goes here
 
-    let query = { $and: [] };
+  let query = { $and: [] };
 
-    if (id) {
-      query.$and.push({ _id: id });
-    }
-    if (bodyPart) {
-      query.$and.push({ bodyPart: bodyPart });
-    }
-    if (equipment) {
-      query.$and.push({ equipment: equipment });
-    }
-    if (target) {
-      query.$and.push({ target: target });
-    }
-
-    if (bodyPart || equipment || target || id) {
-      cursor = coll.find(query).sort({ [sortBy]: [sortOrder] });
-    } else {
-      cursor = coll.find().sort({ [sortBy]: [sortOrder] });
-    }
-
-    const output = [];
-
-    // iterate code goes here
-    await cursor.forEach((elem) => output.push(elem));
-    return output;
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+  if (id) {
+    query.$and.push({ _id: id });
   }
-}
+  if (bodyPart) {
+    query.$and.push({ bodyPart: bodyPart });
+  }
+  if (equipment) {
+    query.$and.push({ equipment: equipment });
+  }
+  if (target) {
+    query.$and.push({ target: target });
+  }
 
-//selectExercises().catch(console.dir);
+  if (bodyPart || equipment || target || id) {
+    cursor = coll.find(query).sort({ [sortBy]: [sortOrder] });
+  } else {
+    cursor = coll.find().sort({ [sortBy]: [sortOrder] });
+  }
+
+  const output = [];
+
+  // iterate code goes here
+  await cursor.forEach((elem) => output.push(elem));
+  return output;
+}
 
 module.exports = selectExercises;
