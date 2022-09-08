@@ -1,10 +1,8 @@
 const { app, server } = require("../App");
 const seedUsers = require("../db/seed/seed-users.js");
 const seedWorkouts = require("../db/seed/seed-workouts.js");
-
 const client = require("../db/connection");
 const request = require("supertest");
-const { ServerDescriptionChangedEvent } = require("mongodb");
 require("jest-sorted");
 
 
@@ -302,7 +300,6 @@ describe("GET /users - username + password ", () => {
   });
 });
 
-
 describe("POST /api/users", () => {
   test("status:201 inserts a new user to the db and sends the user back to the client", () => {
     return request(app)
@@ -345,8 +342,7 @@ describe("POST /api/users", () => {
   //     });
 });
 
-
-describe.only("GET api/bodyparts", () => {
+describe("GET api/bodyparts", () => {
   test("status:200, responds with an array of bodyparts", () => {
     return request(app)
       .get("/api/bodyparts")
@@ -422,4 +418,3 @@ describe("GET api/target", () => {
 //       });
 //   });
 // });
-
