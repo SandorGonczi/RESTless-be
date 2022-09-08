@@ -4,6 +4,7 @@ const seedWorkouts = require("../db/seed/seed-workouts.js");
 const client = require("../db/connection");
 const request = require("supertest");
 const seedWorkoutPlans = require("../db/seed/seed-workoutplans");
+const { ObjectId } = require("mongodb");
 require("jest-sorted");
 
 // beforeAll(() => {
@@ -497,6 +498,82 @@ describe("POST /api/workouts/:username", () => {
       .expect(201)
       .then(({ body }) => {
         const { workout } = body;
+        expect(workout).toBeInstanceOf(Array);
+        expect(workout.length).toBeGreaterThan(0);
+        workout.forEach((workout) => {
+          expect(workout).toEqual(
+            expect.objectContaining({
+              _id: expect.any(String),
+              workout_name: expect.any(String),
+              user_name: expect.any(String),
+              rest_timer: expect.any(String),
+              exercises: expect.any(Object),
+            })
+          );
+        });
+      });
+  });
+});
+
+describe("PATCH /api/workouts/:username", () => {
+  test("status:200, responds with a newly updated workout object", () => {
+    const updatedWorkout = {
+      _id: "6319f39ce5a631eccdfb815a",
+      workout_name: "NEW updated test workout",
+      user_name: "Justin",
+      rest_timer: "300",
+      exercises: {
+        1: {
+          exercise_id: "0007",
+          feedback: "",
+          sets: {
+            1: {
+              weight: 50,
+              reps: 50,
+              time: "null",
+            },
+            2: {
+              weight: 50,
+              reps: 50,
+              time: "null",
+            },
+            3: {
+              weight: 50,
+              reps: 50,
+              time: "null",
+            },
+          },
+        },
+        2: {
+          exercise_id: "0110",
+          feedback: "",
+          sets: {
+            1: {
+              weight: 45,
+              reps: 45,
+              time: "null",
+            },
+            2: {
+              weight: 45,
+              reps: 45,
+              time: "null",
+            },
+            3: {
+              weight: 45,
+              reps: 45,
+              time: "null",
+            },
+          },
+        },
+      },
+    };
+    return request(app)
+      .patch("/api/workouts/Justin")
+      .send(updatedWorkout)
+      .expect(200)
+      .then(({ body }) => {
+        const { workout } = body;
+        console.log(workout);
         expect(workout).toBeInstanceOf(Array);
         expect(workout.length).toBeGreaterThan(0);
         workout.forEach((workout) => {

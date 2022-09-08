@@ -5,6 +5,7 @@ const { getExercises } = require("./controllers/exercises.controller");
 const {
   getWorkoutsByUsername,
   postWorkoutByUsername,
+  patchWorkoutByUsername,
 } = require("./controllers/workouts.controller");
 const {
   getUserByUsernamePassword,
@@ -36,6 +37,7 @@ app.get("/api/users", getUserByUsernamePassword);
 // Workouts calls
 app.get("/api/workouts/:username", getWorkoutsByUsername);
 app.post("/api/workouts/:username", postWorkoutByUsername);
+app.patch("/api/workouts/:username", patchWorkoutByUsername);
 
 // Filter calls
 app.get("/api/bodyparts", getBodyParts);
