@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node App.js"
+    "start": "node App.js",
+    "seed-workouts": "node ./db/seed/seed-workouts.js",
+    "seed-users": "node ./db/seed/seed-users.js"
   },
   "repository": {
     "type": "git",

@@ -1,40 +1,42 @@
 const express = require("express");
-const { errorTest } = require("./controllers/errorTest.controller");
+
+//Controller Imports
 const { getExercises } = require("./controllers/exercises.controller");
+const { getUserByUsernamePassword } = require("./controllers/users.controller");
+const { getWorkoutsByUsername } = require("./controllers/workouts.controller");
 const {
   getUserByUsernamePassword,
   getUserById,
-<<<<<<< HEAD
   postNewUser,
-=======
-  // patchUserById,
->>>>>>> 275e994aaa7812df103480e93c5dd611db24651b
+
 } = require("./controllers/users.controller");
 const {
   getBodyParts,
   getEquipments,
   getTargets,
 } = require("./controllers/filters.controller");
+
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const cors = require("cors");
 
 app.use(express.json());
 
 app.use(cors());
 
-app.get("/exercises", getExercises);
-app.get("/api/users", getUserByUsernamePassword);
+// Exercises calls
 app.get("/api/exercises", getExercises);
-app.get("/api/users/:userid", getUserById);
-<<<<<<< HEAD
+app.get("/api/exercises", getExercises);
+
 app.post("/api/users", postNewUser);
-=======
-// app.patch("/api/users/:userid", patchUserById);
->>>>>>> 275e994aaa7812df103480e93c5dd611db24651b
 
-app.get("/api/errorhandling", errorTest);
+// Users calls
+app.get("/api/users", getUserByUsernamePassword);
 
+// Workouts calls
+app.get("/api/workouts/:username", getWorkoutsByUsername);
+
+// Filter calls
 app.get("/api/bodyparts", getBodyParts);
 app.get("/api/equipment", getEquipments);
 app.get("/api/target", getTargets);
