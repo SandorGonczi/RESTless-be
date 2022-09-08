@@ -1,11 +1,7 @@
-
-const { selectUserByUsernamePassword } = require("../models/users.model");
 const {
   selectUserByUsernamePassword,
-  selectUserById,
   insertNewUser,
 } = require("../models/users.model");
-
 
 exports.getUserByUsernamePassword = (req, res, next) => {
   const validQueryKeys = ["user_name", "user_password"];
@@ -36,4 +32,3 @@ exports.postNewUser = (req, res, next) => {
     })
     .catch(next);
 };
-

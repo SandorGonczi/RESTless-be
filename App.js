@@ -2,13 +2,10 @@ const express = require("express");
 
 //Controller Imports
 const { getExercises } = require("./controllers/exercises.controller");
-const { getUserByUsernamePassword } = require("./controllers/users.controller");
 const { getWorkoutsByUsername } = require("./controllers/workouts.controller");
 const {
   getUserByUsernamePassword,
-  getUserById,
   postNewUser,
-
 } = require("./controllers/users.controller");
 const {
   getBodyParts,
