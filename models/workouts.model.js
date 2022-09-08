@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const client = require("../db/connection");
 
 async function selectWorkoutsByUsername(userName) {
@@ -40,7 +41,36 @@ async function insertWorkoutByUsername(
   return workout;
 }
 
+async function updateWorkoutByUsername(
+  id,
+  userName,
+  workoutName,
+  restTimer,
+  exercises
+) {
+  const formattedId = new ObjectId(id);
+  await client.connect();
+  const db = client.db("restless_test_db");
+  const coll = db.collection("workouts");
+  const filter = { _id: formattedId };
+  const updateDoc = {
+    $set: {
+      workout_name: workoutName,
+      user_name: userName,
+      rest_timer: restTimer,
+      exercises: exercises,
+    },
+  };
+  await coll.updateOne(filter, updateDoc);
+  const workout = [];
+
+  const cursor = coll.find({ _id: formattedId });
+  await cursor.forEach((elem) => workout.push(elem));
+  return workout;
+}
+
 module.exports = {
   selectWorkoutsByUsername,
   insertWorkoutByUsername,
+  updateWorkoutByUsername,
 };

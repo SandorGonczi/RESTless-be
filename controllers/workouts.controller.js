@@ -1,6 +1,7 @@
 const {
   selectWorkoutsByUsername,
   insertWorkoutByUsername,
+  updateWorkoutByUsername,
 } = require("../models/workouts.model");
 
 exports.getWorkoutsByUsername = (req, res, next) => {
@@ -17,11 +18,24 @@ exports.postWorkoutByUsername = (req, res, next) => {
   const { workout_name, rest_timer, exercises } = req.body;
   const workoutName = workout_name;
   const restTimer = rest_timer;
-  console.log(workoutName);
-  console.log(restTimer);
   insertWorkoutByUsername(userName, workoutName, restTimer, exercises)
     .then((workout) => {
       res.status(201).send({ workout });
+    })
+    .catch(next);
+};
+
+exports.patchWorkoutByUsername = (req, res, next) => {
+  const userName = req.params.username;
+  const { _id, workout_name, rest_timer, exercises } = req.body;
+  const workoutName = workout_name;
+  const restTimer = rest_timer;
+  const id = _id;
+
+  updateWorkoutByUsername(id, userName, workoutName, restTimer, exercises)
+    .then((workout) => {
+      console.log(workout);
+      res.status(200).send({ workout });
     })
     .catch(next);
 };
