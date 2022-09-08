@@ -441,11 +441,7 @@ describe("GET /api/workouts/:username", () => {
 });
 
 describe("POST /api/workouts/:username", () => {
-
-
-
   test("status:201, responds with a newly added workout object", () => {
-
     const newWorkout = {
       workout_name: "newly added test",
       user_name: "Justin",
@@ -518,7 +514,6 @@ describe("POST /api/workouts/:username", () => {
   });
 });
 
-
 describe("PATCH /api/workouts/:username", () => {
   test("status:200, responds with a newly updated workout object", () => {
     const updatedWorkout = {
@@ -586,6 +581,12 @@ describe("PATCH /api/workouts/:username", () => {
               _id: expect.any(String),
               workout_name: expect.any(String),
               user_name: expect.any(String),
+            })
+          );
+        });
+      });
+  });
+});
 
 describe("GET /api/workoutplans", () => {
   test("status:200, responds with array of workout objects", () => {
