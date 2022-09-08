@@ -7,7 +7,8 @@
     "test": "jest",
     "start": "node App.js",
     "seed-workouts": "node ./db/seed/seed-workouts.js",
-    "seed-users": "node ./db/seed/seed-users.js"
+    "seed-users": "node ./db/seed/seed-users.js",
+    "seed-all": "node ./db/seed/seed-all.js"
   },
   "repository": {
     "type": "git",

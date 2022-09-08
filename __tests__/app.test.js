@@ -6,11 +6,11 @@ const request = require("supertest");
 const seedWorkoutPlans = require("../db/seed/seed-workoutplans");
 require("jest-sorted");
 
-beforeAll(() => {
-  seedUsers();
-  seedWorkouts();
-  seedWorkoutPlans();
-});
+// beforeAll(() => {
+//   seedUsers();
+//   seedWorkouts();
+//   seedWorkoutPlans();
+// });
 
 // afterAll(() => {
 //   return client.close();
@@ -440,7 +440,11 @@ describe("GET /api/workouts/:username", () => {
 });
 
 describe("POST /api/workouts/:username", () => {
-  test("status:200, responds with a newly added workout object", () => {
+
+
+
+  test("status:201, responds with a newly added workout object", () => {
+
     const newWorkout = {
       workout_name: "newly added test",
       user_name: "Justin",
@@ -491,15 +495,14 @@ describe("POST /api/workouts/:username", () => {
       },
     };
     return request(app)
-      .get("/api/workouts/Justin")
+      .post("/api/workouts/Justin")
       .send(newWorkout)
-      .expect(200)
+      .expect(201)
       .then(({ body }) => {
-        const { workouts } = body;
-        console.log(workouts);
-        expect(workouts).toBeInstanceOf(Array);
-        expect(workouts.length).toBeGreaterThan(0);
-        workouts.forEach((workout) => {
+        const { workout } = body;
+        expect(workout).toBeInstanceOf(Array);
+        expect(workout.length).toBeGreaterThan(0);
+        workout.forEach((workout) => {
           expect(workout).toEqual(
             expect.objectContaining({
               _id: expect.any(String),
