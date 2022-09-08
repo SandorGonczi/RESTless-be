@@ -28,7 +28,6 @@ app.use(cors());
 
 // Exercises calls
 app.get("/api/exercises", getExercises);
-app.get("/api/exercises", getExercises);
 
 app.post("/api/users", postNewUser);
 
