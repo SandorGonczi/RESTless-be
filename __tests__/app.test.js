@@ -13,9 +13,9 @@ require("jest-sorted");
 //   seedWorkoutPlans();
 // });
 
-// afterAll(() => {
-//   return client.close();
-// });
+afterAll(() => {
+  return server.close();
+});
 
 // beforeEach(() => {
 //   return seed();
