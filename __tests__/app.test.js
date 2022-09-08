@@ -3,16 +3,18 @@ const seedUsers = require("../db/seed/seed-users.js");
 const seedWorkouts = require("../db/seed/seed-workouts.js");
 const client = require("../db/connection");
 const request = require("supertest");
+const seedWorkoutPlans = require("../db/seed/seed-workoutplans");
 require("jest-sorted");
 
 beforeAll(() => {
   seedUsers();
   seedWorkouts();
+  seedWorkoutPlans();
 });
 
-afterAll(() => {
-  return client.close();
-});
+// afterAll(() => {
+//   return client.close();
+// });
 
 // beforeEach(() => {
 //   return seed();
@@ -413,16 +415,102 @@ describe("GET api/target", () => {
   });
 });
 
-// describe("GET /api/workouts/:username", () => {
-//   test("status:200, responds with array of workout objects", () => {
-//     return request(app)
-//       .get("/api/workouts/Justin")
-//       .expect(200)
-//       .then(({ body }) => {
-//         const { workouts } = body;
-//         // expect(user).toBeInstanceOf(Object);
-//         // expect(user.user_name).toEqual("Lance");
-//         // expect(user.user_password).toEqual("password2");
-//       });
-//   });
-// });
+describe("GET /api/workouts/:username", () => {
+  test("status:200, responds with array of workout objects", () => {
+    return request(app)
+      .get("/api/workouts/Justin")
+      .expect(200)
+      .then(({ body }) => {
+        const { workouts } = body;
+        console.log(workouts);
+        expect(workouts).toBeInstanceOf(Array);
+        expect(workouts.length).toBeGreaterThan(0);
+        workouts.forEach((workout) => {
+          expect(workout).toEqual(
+            expect.objectContaining({
+              _id: expect.any(String),
+              workout_name: expect.any(String),
+              user_name: expect.any(String),
+              rest_timer: expect.any(String),
+              exercises: expect.any(Object),
+            })
+          );
+        });
+      });
+  });
+});
+
+describe.only("POST /api/workouts/:username", () => {
+  test("status:200, responds with a newly added workout object", () => {
+    const newWorkout = {
+      workout_name: "newly added test",
+      user_name: "Justin",
+      rest_timer: "150",
+      exercises: {
+        1: {
+          exercise_id: "0007",
+          feedback: "",
+          sets: {
+            1: {
+              weight: 10,
+              reps: 10,
+              time: "null",
+            },
+            2: {
+              weight: 10,
+              reps: 10,
+              time: "null",
+            },
+            3: {
+              weight: 10,
+              reps: 10,
+              time: "null",
+            },
+          },
+        },
+        2: {
+          exercise_id: "0110",
+          feedback: "",
+          sets: {
+            1: {
+              weight: 10,
+              reps: 10,
+              time: "null",
+            },
+            2: {
+              weight: 10,
+              reps: 10,
+              time: "null",
+            },
+            3: {
+              weight: 10,
+              reps: 10,
+              time: "null",
+            },
+          },
+        },
+      },
+    };
+    return request(app)
+      .get("/api/workouts/Justin")
+      .send(newWorkout)
+      .expect(200)
+      .then(({ body }) => {
+        const { workouts } = body;
+        console.log(workouts);
+        expect(workouts).toBeInstanceOf(Array);
+        expect(workouts.length).toBeGreaterThan(0);
+        workouts.forEach((workout) => {
+          expect(workout).toEqual(
+            expect.objectContaining({
+              _id: expect.any(String),
+              workout_name: expect.any(String),
+              user_name: expect.any(String),
+              rest_timer: expect.any(String),
+              exercises: expect.any(Object),
+            })
+          );
+        });
+      });
+  });
+});

@@ -2,7 +2,10 @@ const express = require("express");
 
 //Controller Imports
 const { getExercises } = require("./controllers/exercises.controller");
-const { getWorkoutsByUsername } = require("./controllers/workouts.controller");
+const {
+  getWorkoutsByUsername,
+  postWorkoutByUsername,
+} = require("./controllers/workouts.controller");
 const {
   getUserByUsernamePassword,
   postNewUser,
@@ -32,6 +35,7 @@ app.get("/api/users", getUserByUsernamePassword);
 
 // Workouts calls
 app.get("/api/workouts/:username", getWorkoutsByUsername);
+app.post("/api/workouts/:username", postWorkoutByUsername);
 
 // Filter calls
 app.get("/api/bodyparts", getBodyParts);
