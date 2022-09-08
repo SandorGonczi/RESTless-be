@@ -7,14 +7,6 @@ const request = require("supertest");
 const { ServerDescriptionChangedEvent } = require("mongodb");
 require("jest-sorted");
 
-beforeAll(() => {
-  seedUsers();
-  seedWorkouts();
-});
-
-afterAll(() => {
-  return client.close();
-});
 
 // beforeEach(() => {
 //   return seed();
