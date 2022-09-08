@@ -1,4 +1,4 @@
-[
+module.exports = [
   {
     workout_name: "Full body A",
     rest_timer: "120",
@@ -95,7 +95,7 @@
         },
       },
       2: {
-        exercise_id: "011010",
+        exercise_id: "0110",
         sets: {
           1: {
             repsOrTime: 10,
