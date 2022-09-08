@@ -5,6 +5,14 @@ const client = require("../db/connection");
 const request = require("supertest");
 require("jest-sorted");
 
+beforeAll(() => {
+  seedUsers();
+  seedWorkouts();
+});
+
+afterAll(() => {
+  return client.close();
+});
 
 // beforeEach(() => {
 //   return seed();
