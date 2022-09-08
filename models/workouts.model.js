@@ -15,19 +15,29 @@ async function selectWorkoutsByUsername(userName) {
   return output;
 }
 
-async function insertWorkoutByUsername(userName) {
+async function insertWorkoutByUsername(
+  userName,
+  workoutName,
+  restTimer,
+  exercises
+) {
   await client.connect();
   const db = client.db("restless_test_db");
   const coll = db.collection("workouts");
 
   const insertion = await coll.insertOne({
+    workout_name: workoutName,
     user_name: userName,
+    rest_timer: restTimer,
+    exercises: exercises,
   });
+
   const workout = [];
+
   const cursor = coll.find({ _id: insertion.insertedId });
   await cursor.forEach((elem) => workout.push(elem));
 
-  return user[0];
+  return workout;
 }
 
 module.exports = {
