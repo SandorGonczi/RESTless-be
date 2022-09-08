@@ -1,7 +1,11 @@
 const {
   selectUserByUsernamePassword,
   selectUserById,
+<<<<<<< HEAD
   insertNewUser,
+=======
+  // updateUserById,
+>>>>>>> 275e994aaa7812df103480e93c5dd611db24651b
 } = require("../models/users.model");
 
 exports.getUserByUsernamePassword = (req, res, next) => {
@@ -32,6 +36,7 @@ exports.getUserById = (req, res, next) => {
     .catch(next);
 };
 
+<<<<<<< HEAD
 exports.postNewUser = (req, res, next) => {
   const { user_name, user_password } = req.body;
 
@@ -39,6 +44,14 @@ exports.postNewUser = (req, res, next) => {
     .then((user) => {
       console.log(user);
       res.status(201).send({ _id: user._id });
+=======
+exports.patchUserById = (req, res, next) => {
+  const userId = req.params.userid;
+  const newWorkout = req.body.new_workout;
+  updateUserById(userId, newWorkout)
+    .then((user) => {
+      res.status(200).send({ user: user });
+>>>>>>> 275e994aaa7812df103480e93c5dd611db24651b
     })
     .catch(next);
 };

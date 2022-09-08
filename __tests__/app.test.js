@@ -336,6 +336,7 @@ describe("GET /users/:userid", () => {
   });
 });
 
+<<<<<<< HEAD
 describe("POST /api/users", () => {
   test("status:201 inserts a new user to the db and sends the user back to the client", () => {
     return request(app)
@@ -377,3 +378,113 @@ describe("POST /api/users", () => {
   //       expect(response.body.msg).toBe("Invalid request!");
   //     });
 });
+=======
+describe.only("GET api/bodyparts", () => {
+  test("status:200, responds with an array of bodyparts", () => {
+    return request(app)
+      .get("/api/bodyparts")
+      .expect(200)
+      .then(({ body }) => {
+        const exercises = body;
+        expect(exercises).toBeInstanceOf(Array);
+        expect(exercises.length).toBeGreaterThan(0);
+        exercises.forEach((exercise) => {
+          expect(exercise).toEqual(
+            expect.objectContaining({
+              _id: expect.any(String),
+              bodyPart: expect.any(String),
+            })
+          );
+        });
+      });
+  });
+});
+
+describe.only("GET api/equipment", () => {
+  test("status:200, responds with an array of equipment", () => {
+    return request(app)
+      .get("/api/equipment")
+      .expect(200)
+      .then(({ body }) => {
+        const exercises = body;
+        expect(exercises).toBeInstanceOf(Array);
+        expect(exercises.length).toBeGreaterThan(0);
+        exercises.forEach((exercise) => {
+          expect(exercise).toEqual(
+            expect.objectContaining({
+              _id: expect.any(String),
+              equipment: expect.any(String),
+            })
+          );
+        });
+      });
+  });
+});
+
+describe.only("GET api/target", () => {
+  test("status:200, responds with an array of bodyparts", () => {
+    return request(app)
+      .get("/api/target")
+      .expect(200)
+      .then(({ body }) => {
+        const exercises = body;
+        expect(exercises).toBeInstanceOf(Array);
+        expect(exercises.length).toBeGreaterThan(0);
+        exercises.forEach((exercise) => {
+          expect(exercise).toEqual(
+            expect.objectContaining({
+              _id: expect.any(String),
+              target: expect.any(String),
+            })
+          );
+        });
+      });
+  });
+});
+
+// describe.only("PATCH /users/:userid", () => {
+//   test("status:200, responds with a user object", () => {
+//     const newWorkout = {
+//       "test-workout": {
+//         date: ["09-10-2022", "10-11-2022"],
+//         rest_timer: "120",
+//         exercises: {
+//           1: {
+//             exercise_id: "0007",
+//             feedback: "",
+//             sets: {
+//               1: {
+//                 weight: [12, 12],
+//                 reps: [12, 12],
+//                 time: "null",
+//               },
+//               2: {
+//                 weight: [12, 12],
+//                 reps: [12, 12],
+//                 time: "null",
+//               },
+//               3: {
+//                 weight: [12, 12],
+//                 reps: [12, 12],
+//                 time: "null",
+//               },
+//             },
+//           },
+//         },
+//       },
+//     };
+//     return request(app)
+//       .patch("/api/users/2")
+//       .send(newWorkout)
+//       .expect(200)
+//       .then(({ body }) => {
+//         const { user } = body;
+//         console.log(user);
+//         expect(user).toBeInstanceOf(Object);
+//         expect(user.user_name).toEqual("Lance");
+//         expect(user.user_password).toEqual("password2");
+//         expect(user.workouts).toBeInstanceOf(Object);
+//       });
+//   });
+// });
+>>>>>>> 275e994aaa7812df103480e93c5dd611db24651b

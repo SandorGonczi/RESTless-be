@@ -39,6 +39,7 @@ async function selectUserById(userId) {
   }
 }
 
+<<<<<<< HEAD
 async function insertNewUser(userName, userPassword) {
   try {
     await client.connect();
@@ -59,9 +60,30 @@ async function insertNewUser(userName, userPassword) {
     await client.close();
   }
 }
+=======
+// async function updateUserById(userId, newWorkout) {
+//   try {
+//     await client.connect();
+
+//     const db = client.db("restless_test_db");
+//     const coll = db.collection("users");
+
+//     const filter = { user_id: userId };
+//     const updateDoc = { $set: { workouts: newWorkout } };
+//     const result = await coll.updateOne(filter, updateDoc);
+//     return result;
+//   } finally {
+//     await client.close();
+//   }
+// }
+>>>>>>> 275e994aaa7812df103480e93c5dd611db24651b
 
 module.exports = {
   selectUserByUsernamePassword,
   selectUserById,
+<<<<<<< HEAD
   insertNewUser,
+=======
+  // updateUserById,
+>>>>>>> 275e994aaa7812df103480e93c5dd611db24651b
 };
