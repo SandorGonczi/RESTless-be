@@ -1,150 +1,128 @@
 module.exports = [
   {
-    workout_name: "Full body A",
+    workout_name: "full body - A",
     rest_timer: "120",
-    exercises: {
-      1: {
-        exercise_id: "0065",
-        sets: {
-          1: {
-            repsOrTime: 6,
+    exercises: [
+      {
+        _id: "0834",
+        name: "weighted front raise",
+        gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/0834.gif",
+        target: "delts",
+        bodyPart: "shoulders",
+        equipment: "weighted",
+        NumberOfSets: 4,
+        feedback: "",
+        sets: [
+          {
+            weight: 10,
+            reps: 10,
+            time: "null",
           },
-          2: {
-            repsOrTime: 6,
+          {
+            weight: 10,
+            reps: 10,
+            time: "null",
           },
-          3: {
-            repsOrTime: 6,
+          {
+            weight: 10,
+            reps: 10,
+            time: "null",
           },
-          4: {
-            repsOrTime: 6,
+          {
+            weight: 10,
+            reps: 10,
+            time: "null",
           },
-        },
+        ],
       },
-      2: {
-        exercise_id: "0066",
-        sets: {
-          1: {
-            repsOrTime: 6,
+      {
+        _id: "1394",
+        name: "smith reverse calf raises",
+        gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/1394.gif",
+        target: "calves",
+        bodyPart: "lower legs",
+        equipment: "smith machine",
+        NumberOfSets: 3,
+        feedback: "",
+        sets: [
+          {
+            weight: 10,
+            reps: 10,
+            time: "null",
           },
-          2: {
-            repsOrTime: 6,
+          {
+            weight: 10,
+            reps: 10,
+            time: "null",
           },
-          3: {
-            repsOrTime: 6,
+          {
+            weight: 10,
+            reps: 10,
+            time: "null",
           },
-          4: {
-            repsOrTime: 6,
-          },
-        },
+        ],
       },
-      3: {
-        exercise_id: "0070",
-        sets: {
-          1: {
-            repsOrTime: 6,
-          },
-          2: {
-            repsOrTime: 6,
-          },
-          3: {
-            repsOrTime: 6,
-          },
-          4: {
-            repsOrTime: 6,
-          },
-        },
-      },
-      4: {
-        exercise_id: "0071",
-        sets: {
-          1: {
-            repsOrTime: 6,
-          },
-          2: {
-            repsOrTime: 6,
-          },
-          3: {
-            repsOrTime: 6,
-          },
-          4: {
-            repsOrTime: 6,
-          },
-        },
-      },
-    },
+    ],
   },
+
   {
-    workout_name: "Full body B",
-    rest_timer: "90",
-    exercises: {
-      1: {
-        exercise_id: "0165",
-        sets: {
-          1: {
-            repsOrTime: 10,
+    workout_name: "full body - B",
+    rest_timer: "120",
+    exercises: [
+      {
+        _id: "1683",
+        bodyPart: "upper arms",
+        equipment: "smith machine",
+        gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/1683.gif",
+        name: "smith machine bicep curl",
+        target: "biceps",
+        NumberOfSets: 4,
+        feedback: "",
+        sets: [
+          {
+            weight: 10,
+            reps: 8,
+            time: "null",
           },
-          2: {
-            repsOrTime: 10,
+          {
+            weight: 10,
+            reps: 8,
+            time: "null",
           },
-          3: {
-            repsOrTime: 10,
+          {
+            weight: 10,
+            reps: 8,
+            time: "null",
           },
-          4: {
-            repsOrTime: 10,
+          {
+            weight: 10,
+            reps: 8,
+            time: "null",
           },
-        },
+        ],
       },
-      2: {
-        exercise_id: "0110",
-        sets: {
-          1: {
-            repsOrTime: 10,
+      {
+        _id: "3642",
+        bodyPart: "upper legs",
+        equipment: "weighted",
+        gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3642.gif",
+        name: "weighted stretch lunge",
+        target: "glutes",
+        NumberOfSets: 2,
+        feedback: "",
+        sets: [
+          {
+            weight: 8,
+            reps: 12,
+            time: "null",
           },
-          2: {
-            repsOrTime: 10,
+          {
+            weight: 8,
+            reps: 12,
+            time: "null",
           },
-          3: {
-            repsOrTime: 10,
-          },
-          4: {
-            repsOrTime: 10,
-          },
-        },
+        ],
       },
-      3: {
-        exercise_id: "0170",
-        sets: {
-          1: {
-            repsOrTime: 10,
-          },
-          2: {
-            repsOrTime: 10,
-          },
-          3: {
-            repsOrTime: 10,
-          },
-          4: {
-            repsOrTime: 10,
-          },
-        },
-      },
-      4: {
-        exercise_id: "0171",
-        sets: {
-          1: {
-            repsOrTime: 10,
-          },
-          2: {
-            repsOrTime: 10,
-          },
-          3: {
-            repsOrTime: 10,
-          },
-          4: {
-            repsOrTime: 10,
-          },
-        },
-      },
-    },
+    ],
   },
 ];
