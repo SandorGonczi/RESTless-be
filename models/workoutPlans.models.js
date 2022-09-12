@@ -10,7 +10,6 @@ async function fetchWorkoutPlans() {
   const output = [];
 
   await cursor.forEach((elem) => output.push(elem));
-  console.log(output, " in model output");
   return output;
 }
 

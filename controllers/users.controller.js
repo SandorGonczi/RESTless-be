@@ -24,10 +24,12 @@ exports.getUserByUsernamePassword = (req, res, next) => {
 
 exports.postNewUser = (req, res, next) => {
   const { user_name, user_password } = req.body;
+  if (!user_name || !user_password) {
+    res.status(400).send({ msg: "Bad Request" });
+  }
 
   insertNewUser(user_name, user_password)
     .then((user) => {
-      console.log(user);
       res.status(201).send({ _id: user._id });
     })
     .catch(next);
