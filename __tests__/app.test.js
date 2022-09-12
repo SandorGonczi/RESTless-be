@@ -327,29 +327,31 @@ describe("POST /api/users", () => {
       });
   });
 
-  // test("POST:400 responds with an error message when provided wrong body", () => {
-  //   return request(app)
-  //     .post("/api/articles/1/comments")
-  //     .send({
-  //       wrong_key: "lurker",
-  //       body: "Rolling with the big boys, baby!",
-  //     })
-  //     .expect(400)
-  //     .then((response) => {
-  //       expect(response.body.msg).toBe("Invalid request!");
-  //     });
-  // });
-  // test("POST:400 responds with an error message when provided wrong body", () => {
-  //   return request(app)
-  //     .post("/api/articles/1/comments")
-  //     .send({
-  //       username: 12,
-  //       body: "Rolling with the big boys, baby!",
-  //     })
-  //     .expect(400)
-  //     .then((response) => {
-  //       expect(response.body.msg).toBe("Invalid request!");
-  //     });
+  test("POST:400 responds with an error message when provided wrong body", () => {
+    return request(app)
+      .post("/api/users")
+      .send({
+        wrong_key: "Joey",
+        user_password: "password4",
+      })
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad Request");
+      });
+  });
+
+  test("POST:400 responds with an error message when provided wrong body", () => {
+    return request(app)
+      .post("/api/users")
+      .send({
+        user_name: "Joey",
+        wrongkey: "password4",
+      })
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad Request");
+      });
+  });
 });
 
 describe("GET api/bodyparts", () => {
@@ -422,7 +424,7 @@ describe("GET /api/workouts/:username", () => {
       .expect(200)
       .then(({ body }) => {
         const { workouts } = body;
-        console.log(workouts);
+
         expect(workouts).toBeInstanceOf(Array);
         expect(workouts.length).toBeGreaterThan(0);
         workouts.forEach((workout) => {
@@ -572,7 +574,6 @@ describe("PATCH /api/workouts/:username", () => {
       .expect(200)
       .then(({ body }) => {
         const { workout } = body;
-        console.log(workout);
         expect(workout).toBeInstanceOf(Array);
         expect(workout.length).toBeGreaterThan(0);
         workout.forEach((workout) => {
@@ -595,7 +596,6 @@ describe("GET /api/workoutplans", () => {
       .expect(200)
       .then(({ body }) => {
         const { workoutPlans } = body;
-        console.log(workoutPlans);
         expect(workoutPlans).toBeInstanceOf(Array);
         expect(workoutPlans.length).toBeGreaterThan(0);
         workoutPlans.forEach((workoutPlan) => {

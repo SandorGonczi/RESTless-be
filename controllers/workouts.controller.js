@@ -34,7 +34,6 @@ exports.patchWorkoutByUsername = (req, res, next) => {
 
   updateWorkoutByUsername(id, userName, workoutName, restTimer, exercises)
     .then((workout) => {
-      console.log(workout);
       res.status(200).send({ workout });
     })
     .catch(next);
