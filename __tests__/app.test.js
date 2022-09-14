@@ -589,25 +589,24 @@ describe("PATCH /api/workouts/:username", () => {
   });
 });
 
-describe("DELETE /api/workouts/:username", () => {
-  test("status:204, sends no response", () => {
-    const deletedWorkout = {
-      workout_name: "newly added test",
-      user_name: "Justin",
-      rest_timer: "150",
-      exercises: [],
-    };
+// describe("DELETE /api/workouts/:username", () => {
+//   test("status:204, sends no response", () => {
+//     const deletedWorkout = {
+//       workout_name: "newly added test",
+//       user_name: "Justin",
+//       rest_timer: "150",
+//       exercises: [],
+//     };
 
-    return request(app)
-      .delete("/api/workouts/Justin")
-      .send({ workout_name: deletedWorkout.workout_name })
-      .expect(204)
-      .then((body) => {
-        console.log(body);
-        expect(body.status).toBe(204);
-      });
-  });
-});
+//     return request(app)
+//       .delete("/api/workouts/Justin")
+//       .send({ workout_name: deletedWorkout.workout_name })
+//       .expect(204)
+//       .then((body) => {
+//         expect(body.status).toBe(204);
+//       });
+//   });
+// });
 
 describe("GET /api/workoutplans", () => {
   test("status:200, responds with array of workout objects", () => {
