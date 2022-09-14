@@ -39,7 +39,7 @@ app.get("/api/users", getUserByUsernamePassword);
 app.get("/api/workouts/:username", getWorkoutsByUsername);
 app.post("/api/workouts/:username", postWorkoutByUsername);
 app.patch("/api/workouts/:username", patchWorkoutByUsername);
-app.delete("/api/workouts/:username", deleteWorkoutsByUsername);
+// app.delete("/api/workouts/:username", deleteWorkoutsByUsername);
 
 // Workoutplan calls
 app.get("/api/workoutplans", getWorkoutPlans);

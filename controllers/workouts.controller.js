@@ -40,14 +40,14 @@ exports.patchWorkoutByUsername = (req, res, next) => {
     .catch(next);
 };
 
-exports.deleteWorkoutsByUsername = (req, res, next) => {
-  const userName = req.params.username;
-  const { workout_name } = req.body;
-  const workoutName = workout_name;
+// exports.deleteWorkoutsByUsername = (req, res, next) => {
+//   const userName = req.params.username;
+//   const { workout_name } = req.body;
+//   const workoutName = workout_name;
 
-  removeWorkoutByUsername(userName, workoutName)
-    .then(() => {
-      res.sendStatus(204);
-    })
-    .catch(next);
-};
+//   removeWorkoutByUsername(userName, workoutName)
+//     .then(() => {
+//       res.sendStatus(204);
+//     })
+//     .catch(next);
+// };
