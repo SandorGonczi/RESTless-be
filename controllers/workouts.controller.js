@@ -2,6 +2,7 @@ const {
   selectWorkoutsByUsername,
   insertWorkoutByUsername,
   updateWorkoutByUsername,
+  removeWorkoutByUsername,
 } = require("../models/workouts.model");
 
 exports.getWorkoutsByUsername = (req, res, next) => {
@@ -35,6 +36,18 @@ exports.patchWorkoutByUsername = (req, res, next) => {
   updateWorkoutByUsername(id, userName, workoutName, restTimer, exercises)
     .then((workout) => {
       res.status(200).send({ workout });
+    })
+    .catch(next);
+};
+
+exports.deleteWorkoutsByUsername = (req, res, next) => {
+  const userName = req.params.username;
+  const { workout_name } = req.body;
+  const workoutName = workout_name;
+
+  removeWorkoutByUsername(userName, workoutName)
+    .then(() => {
+      res.sendStatus(204);
     })
     .catch(next);
 };

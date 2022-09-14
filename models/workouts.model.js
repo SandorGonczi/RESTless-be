@@ -69,8 +69,29 @@ async function updateWorkoutByUsername(
   return workout;
 }
 
+async function removeWorkoutByUsername(userName, workoutName) {
+  await client.connect();
+  const db = client.db("restless_test_db");
+  const coll = db.collection("workouts");
+
+  const deletion = await coll
+    .deleteMany({
+      workout_name: workoutName,
+      user_name: userName,
+    })
+    .then((res) => {
+      if (res.deletedCount === 0) {
+        return Promise.reject({ status: 404, msg: "Workout does not exist!" });
+      }
+      return res;
+    });
+
+  return deletion;
+}
+
 module.exports = {
   selectWorkoutsByUsername,
   insertWorkoutByUsername,
   updateWorkoutByUsername,
+  removeWorkoutByUsername,
 };
